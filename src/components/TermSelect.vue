@@ -4,20 +4,19 @@
 			{{label}}
 			<alphabetical-select id="brands-select"
 			                     :options="terms"
-			                     :value="value"
-			                     @input="(e, p) => $emit('input', p)"
+			                     v-model="selectedTerm"
 			                     :anyText="anyText"/>
 		</label>
 
 
-		<term-select v-if="value && childTerms && childTerms.length > 1"
-		             :label="'Select ' + (value.brand || '') + ' ' + value.name + ' '+(value.parent ? 'trim' : 'model')+':'"
-		             :terms="childTerms"
+		<term-select v-if="selectedTerm && selectedTerm.childTerms && selectedTerm.childTerms.length > 1"
+		             :label="'Select ' + (selectedTerm.brand || '') + ' ' + selectedTerm.name + ' '+(selectedTerm.parent ? 'trim' : 'model')+':'"
+		             :terms="selectedTerm.childTerms"
 		             :load-child-terms="loadChildTerms"
 		             v-model="selectedChild"
 		             @input="emit"
-		             :key="value.id"></term-select>
-		<!--		             :any-text="'Any ' +value.name + ' '+(value.parent ? 'trim' : 'model')+''"-->
+		             :key="selectedTerm.id"></term-select>
+		<!--		             :any-text="'Any ' +selectedTerm.name + ' '+(selectedTerm.parent ? 'trim' : 'model')+''"-->
 	</div>
 </template>
 
@@ -33,7 +32,7 @@
 
 		data() {
 			return {
-				childTerms: null,
+				selectedTerm: null,
 				selectedChild: null,
 			};
 		},
@@ -42,23 +41,23 @@
 			emit() {
 				// console.log({
 				// 	label: this.label,
-				// 	value: this.value,
+				// 	selectedTerm: this.selectedTerm,
 				// 	selectedChild: this.selectedChild,
 				// });
-				this.$emit('input', (this.selectedChild && this.value) ? this.selectedChild : this.value);
+				this.$emit('input', (this.selectedChild && this.selectedTerm) ? this.selectedChild : this.selectedTerm);
 			},
 		},
 
 		watch: {
-			'value.id': {
+			'selectedTerm.id': {
 				immediate: true,
 				handler: async function() {
 					this.selectedChild = null;
 
 					this.emit()
 
-					if (this.value && this.childTerms === undefined) {
-						this.$set(this, 'childTerms', await this.loadChildTerms(this.value.id));
+					if (this.selectedTerm && this.selectedTerm.childTerms === undefined) {
+						this.$set(this.selectedTerm, 'childTerms', await this.loadChildTerms(this.selectedTerm.id));
 					}
 
 				},

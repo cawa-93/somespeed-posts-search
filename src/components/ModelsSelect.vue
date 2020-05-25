@@ -8,7 +8,6 @@
 			:key="0"></term-select>
 		<!--			any-text="Any brand"-->
 		<input v-if="selectedTerm" type="hidden" :name="this.taxonomy.slug" :value="selectedTerm.slug">
-				{{selectedTerm}}
 	</div>
 </template>
 
