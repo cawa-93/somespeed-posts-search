@@ -5,7 +5,7 @@
 			<input type="search" name="s">
 		</label>
 
-		<models-select v-if="rawAllTaxonomies.models" :taxonomy="rawAllTaxonomies.models" :value="1766"/>
+		<models-select v-if="rawAllTaxonomies.models" :taxonomy="rawAllTaxonomies.models" :value="1945"/>
 
 		<input type="submit">
 	</form>
@@ -13,6 +13,7 @@
 
 <script>
 	import ModelsSelect from '@/components/ModelsSelect.vue';
+	import fetchAndCache from "./fetchAndCache";
 
 
 	export default {
@@ -35,9 +36,7 @@
 		},
 
 		async created() {
-			const resp = await fetch('https://somespeed.com/wp-json/wp/v2/taxonomies?type=post');
-
-			const rawAllTaxonomies = await resp.json();
+			const rawAllTaxonomies = await fetchAndCache('https://somespeed.com/wp-json/wp/v2/taxonomies?type=post');
 
 			this.rawAllTaxonomies = {
 				models: rawAllTaxonomies.models,

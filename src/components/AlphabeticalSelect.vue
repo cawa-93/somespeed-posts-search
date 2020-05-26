@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<select @input="emit" :value="(value === null || value === 0) ? 0 : value.id">
+		<select @input="emit" :value="value">
 
 			<option :value="0">{{anyText}}</option>
 			<optgroup v-for="group in groups" :key="group.label" :label="group.label">
@@ -15,8 +15,9 @@
 		name: 'AlphabeticalSelect',
 		props: {
 			options: {
-				type: Array,
+				type: Map,
 			},
+
 			value: {
 				default: 0,
 			},
@@ -28,7 +29,9 @@
 
 		computed: {
 			sortedOptions() {
-				return [...this.options].sort((a, b) => a.name < b.name ? -1 : a.name === b.name ? 0 : 1);
+				return [...this.options]
+						.map((p) => p[1])
+						.sort((a, b) => a.name.toUpperCase() < b.name.toUpperCase() ? -1 : a.name.toUpperCase() === b.name.toUpperCase() ? 0 : 1);
 			},
 			groups() {
 				const groups = [];
@@ -52,9 +55,7 @@
 
 		methods: {
 			emit(event) {
-				this.$emit('input', this.sortedOptions.find(
-					option => option.id === parseInt(event.target.value),
-				) || null);
+				this.$emit('input', parseInt(event.target.value));
 			},
 		},
 	};
