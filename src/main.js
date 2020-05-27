@@ -1,7 +1,7 @@
 let options = {
 	root: document.querySelector('header'),
     rootMargin: '0px',
-    threshold: 1
+    threshold: 0
 }
 
 

@@ -8,14 +8,13 @@
             <alphabetical-select :options="section.items" :value="section.state"
                                  @input="value => rebuildSections(value, index)"/>
         </label>
-        <pre>Value {{lastValue}}</pre>
-        <pre>sections {{sections}}</pre>
     </div>
 </template>
 
 <script>
     import AlphabeticalSelect from "@/components/AlphabeticalSelect";
     import fetchAndCache from '@/fetchAndCache'
+    import loadAll from "@/loadAll";
 
     export default {
         name: 'ModelsSelect',
@@ -105,7 +104,7 @@
             },
 
             async loadTerms(parent = 0) {
-                const terms = await fetchAndCache(
+                const terms = await loadAll(
                     this.taxonomy._links['wp:items'][0].href +
                     '?hide_empty=1&per_page=100&parent=' + parent
                     // + '&exclude=' + this.excludeIDs,

@@ -6,6 +6,7 @@
 		</label>
 
 		<models-select v-if="rawAllTaxonomies.models" :taxonomy="rawAllTaxonomies.models" :value="1945"/>
+		<years-input  v-if="rawAllTaxonomies.years" :taxonomy="rawAllTaxonomies.years" :value="0" />
 
 		<input type="submit">
 	</form>
@@ -14,18 +15,21 @@
 <script>
 	import ModelsSelect from '@/components/ModelsSelect.vue';
 	import fetchAndCache from "./fetchAndCache";
+	import YearsInput from "@/components/YearsInput";
 
 
 	export default {
 		name: 'App',
 
 		components: {
+			YearsInput,
 			ModelsSelect,
 		},
 
 		data() {
 			return {
 				rawAllTaxonomies: {},
+				selectedYearTermId: 2000,
 			};
 		},
 
@@ -34,6 +38,7 @@
 
 			this.rawAllTaxonomies = {
 				models: rawAllTaxonomies.models,
+				years: rawAllTaxonomies.years,
 			};
 		},
 	};
