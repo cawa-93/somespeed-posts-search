@@ -1,13 +1,9 @@
-import Vue from 'vue';
-// import App from "./App.vue";
-
-
-
 let options = {
 	root: document.querySelector('header'),
     rootMargin: '0px',
     threshold: 1
 }
+
 
 const appRoot = document.querySelector('#app')
 
@@ -19,9 +15,7 @@ let observer = new IntersectionObserver(async (entries) => {
 		return
 	}
 
-    const App = () => import('./App.vue');
-
-    const {default: Vue} = await import('vue')
+    const { App, Vue } = await import(/* webpackChunkName: "App.vue" */'@/chunk');
 
     console.log(Vue)
 
