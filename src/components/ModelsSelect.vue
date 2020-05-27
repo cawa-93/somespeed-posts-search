@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import AlphabeticalSelect from "./AlphabeticalSelect";
+    import AlphabeticalSelect from "@/components/AlphabeticalSelect";
     import fetchAndCache from '@/fetchAndCache'
 
     export default {
@@ -32,9 +32,7 @@
             loadedIDs() {
                 return this.terms_tree.map(t => t.id)
             },
-            excludeIDs() {
-                return this.loadedIDs.join(',')
-            },
+
             notEmptySections() {
                 const notEmptySections = []
 
@@ -85,11 +83,25 @@
                     return {}
                 }
 
-                const term = await fetchAndCache(
+
+                /**
+                 * Если запрашиваемый термин уже загружен – найти его и вернуть
+                 * Эта оптимизация необходима при инициализации компонента
+                 **/
+                if (this.notEmptySections.length) {
+                    for (const section of this.notEmptySections) {
+                        if (section.items.has(id)) {
+                            return section.items.get(id)
+                        }
+                    }
+                }
+
+                console.log(`loadTerm(${id})`)
+
+
+                return fetchAndCache(
                     this.taxonomy._links['wp:items'][0].href + '/' + id,
                 );
-
-                return term;
             },
 
             async loadTerms(parent = 0) {
