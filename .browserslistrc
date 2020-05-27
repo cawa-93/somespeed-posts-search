@@ -1,0 +1,1 @@
+defaults and not ie <= 11 and not edge <= 18
