@@ -1,9 +1,5 @@
 <template>
     <label class="filter-container year-filter-container">
-        TermID: {{value}}
-        <br>
-        term slug: {{selectedYear}}
-        <br>
         Choose year:
         <input list="years-list" type="number" :min="minYear" :max="maxYear" placeholder="2000" v-model="selectedYear">
         <datalist id="years-list">

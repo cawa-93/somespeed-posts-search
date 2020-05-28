@@ -17,8 +17,6 @@ let observer = new IntersectionObserver(async (entries) => {
 
     const { App, Vue } = await import(/* webpackChunkName: "App.vue" */'@/chunk');
 
-    console.log(Vue)
-
 
     Vue.config.productionTip = process.env.NODE_ENV === 'production';
 

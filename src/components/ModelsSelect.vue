@@ -95,9 +95,6 @@
                     }
                 }
 
-                console.log(`loadTerm(${id})`)
-
-
                 return fetchAndCache(
                     this.taxonomy._links['wp:items'][0].href + '/' + id,
                 );
@@ -176,7 +173,7 @@
                         }
                     }
 
-                    console.log({lastValue})
+                    // console.log({lastValue})
                 },
             },
         },
