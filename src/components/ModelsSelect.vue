@@ -116,7 +116,6 @@
                     this.sections.push(...(await this.buildSectionFromChild(this.value)))
                 } else {
                     this.sections.push(...(await this.buildSectionsFromParent(0)))
-
                 }
             },
 
@@ -158,8 +157,9 @@
 
         },
 
-        created() {
-            this.setupInitialValue();
+        async created() {
+            await this.setupInitialValue();
+            this.$emit('ready', true)
         },
 
         watch: {

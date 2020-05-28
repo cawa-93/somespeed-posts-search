@@ -1,5 +1,5 @@
 <template>
-    <label class="filter-container year-filter-container">
+    <label class="filter-container year-filter-container" v-if="flatYears.length">
         Choose year:
         <input list="years-list" type="number" :min="minYear" :max="maxYear" placeholder="2000" v-model="selectedYear">
         <datalist id="years-list">
@@ -19,7 +19,7 @@
         data() {
             return {
                 terms: [],
-                selectedYear: (new Date).getFullYear() - 5
+                selectedYear: ''
             }
         },
 
@@ -57,8 +57,9 @@
             },
         },
 
-        created() {
-            this.loadAllTerms()
+        async created() {
+            await this.loadAllTerms()
+            this.$emit('ready', true)
         },
 
         watch: {

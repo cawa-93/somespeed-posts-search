@@ -1,7 +1,7 @@
 <template>
-    <label>
+    <label v-if="sortedOptions.length">
         Choose generation:
-        <select v-if="sortedOptions.length" :value="value" @input="$emit('input', $event.target.value)">
+        <select  :value="value" @input="$emit('input', $event.target.value)">
             <option :value="0">Any</option>
             <option v-for="option in sortedOptions" :key="option.id" :value="option.id">{{option.name}}</option>
         </select>
@@ -38,8 +38,9 @@
             },
         },
 
-        created() {
-            this.loadAllTerms()
+        async created() {
+            await this.loadAllTerms()
+            this.$emit('ready', true)
         },
     }
 </script>
