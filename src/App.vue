@@ -13,13 +13,18 @@
         <loading-skeleton v-if="!rawAllTaxonomies.models || !rawAllTaxonomies.models.ready"/>
 
 
-        <years-input v-if="rawAllTaxonomies.years" v-show="rawAllTaxonomies.years.ready"
-                     :taxonomy="rawAllTaxonomies.years" :value="2000" @ready="v => rawAllTaxonomies.years.ready = v"/>
+        <years-input v-if="rawAllTaxonomies.years"
+                     v-show="rawAllTaxonomies.years.ready"
+                     :taxonomy="rawAllTaxonomies.years"
+                     :value="2000"
+                     @ready="v => rawAllTaxonomies.years.ready = v"/>
         <loading-skeleton v-if="!rawAllTaxonomies.years || !rawAllTaxonomies.years.ready"/>
 
 
-        <generation-select v-if="rawAllTaxonomies.generation" v-show="rawAllTaxonomies.generation.ready"
-                           @ready="v => rawAllTaxonomies.generation.ready = v" :taxonomy="rawAllTaxonomies.generation"
+        <generation-select v-if="rawAllTaxonomies.generation"
+                           v-show="rawAllTaxonomies.generation.ready"
+                           @ready="v => rawAllTaxonomies.generation.ready = v"
+                           :taxonomy="rawAllTaxonomies.generation"
                            v-model.number="selectedGeneration"/>
         <loading-skeleton v-if="!rawAllTaxonomies.generation || !rawAllTaxonomies.generation.ready"/>
 
@@ -36,7 +41,7 @@ selectedGeneration: {{selectedGeneration}}
 
 <script>
     import ModelsSelect from '@/components/ModelsSelect.vue';
-    import fetchAndCache from './fetchAndCache';
+    import fetchAndCache from '@/fetchAndCache';
     import YearsInput from '@/components/YearsInput';
     import GenerationSelect from '@/components/GenerationSelect';
     import LoadingSkeleton from '@/components/LoadingSkeleton';
